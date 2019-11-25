@@ -24,7 +24,7 @@ function App() {
     <div>
       <Header score={score} highScore={highScore} />
       <Instructions />
-      <Board increment={increment} reset={reset} />
+      <Board increment={increment} resetScore={reset} />
       <Footer />
     </div>
   );
