@@ -15,11 +15,18 @@ function Board( {increment, reset }) {
         }
         return cardArr;
     }
+    const getResetCards = cards => {
+        return cards.map(card => {
+            const resetCard = {...card};
+            resetCard.isClicked = false;
+            return resetCard
+        });
+    }
     const handleClick = (id) => {
         cards.forEach((card, index) => {
             if (card.id === id && card.isClicked){
+                setCards(getResetCards(cards));
                 reset()
-                setCards(justices);
             } else if (card.id === id) {
                 increment();
                 let newCard = card;
