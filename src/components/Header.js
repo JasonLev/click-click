@@ -1,6 +1,6 @@
 import React from "react";
 
-function Header() {
+function Header({ score, highScore}) {
   return (
     <header>
       <div>
@@ -9,9 +9,9 @@ function Header() {
       </div>
       <div>
         <span>Score:</span>
-        <span>0</span>
+        <span className="score">{score}</span>
         <span>Highscore:</span>
-        <span>0</span>
+        <span className="score">{highScore}</span>
       </div>
     </header>
   );
