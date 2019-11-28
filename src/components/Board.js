@@ -4,8 +4,8 @@ import justices from '../constants/justices';
 import Card from './Card'
 
 function Board( {increment, resetScore }) {
-    const[cards, setCards] = useState(justices);
-    const[isShaking, setShake] = useState(false);
+    const [cards, setCards] = useState(justices);
+    const [isShaking, setShake] = useState(false);
 
     const shuffleCards = cardArr => {
         for (let i = (cardArr.length - 1); i > 0; i--){
