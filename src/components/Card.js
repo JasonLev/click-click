@@ -1,6 +1,7 @@
 import React from "react";
 
-function Card({ id, src, onclick }) {
+function Card({ card, onclick }) {
+  const { id, src } = card;
     return (
       <div onClick={() => onclick(id)}>
         <img src={src} alt="supreme court justice" className="card" />
