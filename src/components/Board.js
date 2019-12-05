@@ -4,7 +4,7 @@ import justices from '../constants/justices';
 import Card from './Card'
 
 function Board( {increment, resetScore }) {
-    const [cards, setCards] = useState(justices);
+    const [cards, setCards] = useState(justices());
     const [isShaking, setShake] = useState(false);
     const [isShuffle, setShuffle] = useState(false);
 
@@ -23,36 +23,41 @@ function Board( {increment, resetScore }) {
         shuffleCards(cards)
     }, [isShuffle])
     
-    const getResetCards = cards => {
-        return cards.map(card => {
-            const resetCard = card;
-            resetCard.isClicked = false;
-            return resetCard
-        });
+    const resetCards = () => {
+        return justices()
     }
     const handleClick = (id) => {
         cards.forEach((card, index) => {
-            if (card.id === id && card.isClicked){
-                setShake(true)
-                setTimeout(() => {
-                    setCards(getResetCards(cards));
-                    setShuffle(!isShuffle);
-                    resetScore()
-                    setShake(false)
-                }, 1000)
-            } else if (card.id === id) {
-                increment();
-                setCards(prevCards => {
-                    const updatedCards = [...prevCards];
-                    updatedCards[index].isClicked = true;
-                    return updatedCards
-                })
-                setShuffle(!isShuffle);
+            if (card.id === id) {
+                if (card.isClicked) {
+                    gameOver();
+                } else {
+                   gameContinue(index); 
+                }
             }
         })
     }
+    function gameOver() {
+        setShake(true);
+        setTimeout(() => {
+        setCards(resetCards());
+        setShuffle(!isShuffle);
+        resetScore();
+        setShake(false);
+        }, 1000);
+    }
+
+    function gameContinue(index) {
+        increment();
+        setCards(prevCards => {
+        const updatedCards = [...prevCards];
+        updatedCards[index].isClicked = true;
+        return updatedCards;
+        });
+        setShuffle(!isShuffle);
+    }
     const displayCards = cards.slice(0,12).map(card => 
-        <Card key={card.id} id={card.id} src={card.src} onclick={handleClick} />
+        <Card key={card.id} card={card} onclick={handleClick} />
     );
   return <main className={isShaking ? "shake" : undefined}>{displayCards}</main>;
 }
